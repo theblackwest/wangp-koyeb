@@ -14,8 +14,8 @@ WORKDIR /app
 RUN git clone https://github.com/deepbeepmeep/Wan2GP.git .
 
 # Install Python deps
-RUN pip install --no-cache-dir -r requirements.txt
-
+RUN pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir "gradio[mcp]"
 # Expose Gradio port
 EXPOSE 7860
 
