@@ -1,8 +1,11 @@
 FROM pytorch/pytorch:2.7.1-cuda12.8-cudnn9-runtime
 
-# System deps
+# System deps — added build-essential for gcc/g++ needed by insightface & diffq
 RUN apt-get update && apt-get install -y \
     git ffmpeg libgl1 libglib2.0-0 wget curl \
+    build-essential \
+    cmake \
+    python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -16,7 +19,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Expose Gradio port
 EXPOSE 7860
 
-# Launch — bind to all interfaces so Koyeb can route to it
 CMD ["python", "wgp.py", \
      "--server-name", "0.0.0.0", \
      "--server-port", "7860", \
